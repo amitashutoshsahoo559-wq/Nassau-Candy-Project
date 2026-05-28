@@ -3,8 +3,6 @@ Nassau Candy Distributor — Streamlit Dashboard (Real Data)
 Run: cd nassau_candy_shipping && streamlit run streamlit_app/app.py
 """
 
-import os
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -60,8 +58,11 @@ FACTORY_COORDS = {
 @st.cache_data
 def load():
     import os
-    BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    df = pd.read_csv(os.path.join(BASE, "data", "Nassau Candy Distributor.csv"))
+    BASE = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(BASE, "Nassau_Candy_Distributor.csv")
+    if not os.path.exists(csv_path):
+        csv_path = os.path.join(BASE, "data", "Nassau_Candy_Distributor.csv")
+    df = pd.read_csv(csv_path)
     df["Order Date"] = pd.to_datetime(df["Order Date"], dayfirst=True)
     df["Ship Date"]  = pd.to_datetime(df["Ship Date"],  dayfirst=True)
     df["Lead Time"]  = (df["Ship Date"] - df["Order Date"]).dt.days
