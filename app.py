@@ -59,10 +59,7 @@ FACTORY_COORDS = {
 def load():
     import os
     BASE = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(BASE, "Nassau_Candy_Distributor.csv")
-    if not os.path.exists(csv_path):
-        csv_path = os.path.join(BASE, "data", "Nassau_Candy_Distributor.csv")
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv("Nassau Candy Distributor.csv")
     df["Order Date"] = pd.to_datetime(df["Order Date"], dayfirst=True)
     df["Ship Date"]  = pd.to_datetime(df["Ship Date"],  dayfirst=True)
     df["Lead Time"]  = (df["Ship Date"] - df["Order Date"]).dt.days
